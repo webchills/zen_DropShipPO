@@ -4,7 +4,7 @@
  * @copyright Copyright 2003-2016 Zen Cart Development Team
  * @copyright Portions Copyright 2003 osCommerce
  * @license http://www.zen-cart.com/license/2_0.txt GNU Public License V2.0
- * @version $Id: set_subcontrac.php 2016-04-30 10:37:16Z webchills $
+ * @version $Id: set_subcontrac.php 2016-04-30 16:21:16Z webchills $
  */
 
 require('includes/application_top.php');
@@ -72,7 +72,7 @@ require(DIR_WS_CLASSES . 'currencies.php');
         for ($i = 1; $i < count($id_product); $i++) {
 
             $sub = "sub" . $id_product[$i];
-            if ($_POST[$sub] != 'own_stock') {
+            if ($_POST[$sub] != 'ownstock') {
                 $numer = $_POST[$sub];
                 $db->Execute("UPDATE " . TABLE_PRODUCTS . " SET default_subcontractor='$numer' WHERE  products_id ='$id_product[$i]' LIMIT 1");
             } else {
@@ -128,9 +128,9 @@ require(DIR_WS_CLASSES . 'currencies.php');
                         $row22 = $db->Execute("SELECT subcontractors_id,alias FROM " . TABLE_SUBCONTRACTORS_SHIPPING . " ORDER BY alias");
                         while (!$row22->EOF) {
                             if ($row22->fields['subcontractors_id'] == $row33->fields['default_subcontractor']) {
-                                echo "<option value='" . $row22->fields['default_subcontractor'] ."' selected>" . $row22->fields['alias'] . "</option>";
+                                echo "<option value='" . $row22->fields['subcontractors_id'] ."' selected>" . $row22->fields['alias'] . "</option>";
                             } else {
-                                echo "<option value='" . $row22->fields['default_subcontractor']. "'>" . $row22->fields['alias'] . "</option>";
+                                echo "<option value='" . $row22->fields['subcontractors_id']. "'>" . $row22->fields['alias'] . "</option>";
                             }
                             $row22->MoveNext();
 			}
