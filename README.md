@@ -11,3 +11,5 @@ Database Query Changes
 Moving various language and extra data files in single files
 Showing all available fields in edit_subcontrac.php
 Subcontractors now correctly saved in set_subcontrac.php
+Moving from fpdf to tfpdf to get utf-8 support in the pdf packinglists
+pdf packinglists now support umlauts and special characters in product names, customer addresses and customer comments
