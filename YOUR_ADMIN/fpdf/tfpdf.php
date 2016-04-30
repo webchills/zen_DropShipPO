@@ -9,7 +9,7 @@
 *******************************************************************************/
 
 define('tFPDF_VERSION','1.24');
-// define('FPDF_FONTPATH', '/www/htdocs/www.webchills.biz/drive/manager/fpdf/font');
+
 class tFPDF
 {
 
