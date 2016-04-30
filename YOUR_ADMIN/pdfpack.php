@@ -1,11 +1,20 @@
 <?php
-require('fpdf/fpdf.php');
+/**
+ * @package Drop Shipping
+ * @copyright Copyright 2003-2016 Zen Cart Development Team
+ * @copyright Portions Copyright 2003 osCommerce
+ * @license http://www.zen-cart.com/license/2_0.txt GNU Public License V2.0
+ * @version $Id: pdfpack.php 2016-04-30 20:24:16Z webchills $
+ */
+require('fpdf/tfpdf.php');
 
 // Xavier Nicolay 2004
 // Version 1.01 - Modified For Packing List
+// webchills 2016
+// Version 2.0 - Modified for utf-8 support in tFDF
 
 
-class INVOICE extends FPDF
+class INVOICE extends tFPDF
 {
 // private variables
 var $colonnes;
@@ -55,21 +64,17 @@ function _Arc($x1, $y1, $x2, $y2, $x3, $y3)
 
 
 // public functions
-function sizeOfText( $texte, $largeur )
-{
-    $index    = 0;
-    $nb_lines = 0;
-    $loop     = TRUE;
-    while ( $loop )
+    function sizeOfText($texte, $largeur)
     {
-        $pos = strpos($texte, "\n");
-        if (!$pos)
-        {
-            $loop  = FALSE;
-            $ligne = $texte;
-        }
-        else
-        {
+        $index = 0;
+        $nb_lines = 0;
+        $loop = TRUE;
+        while ($loop) {
+            $pos = strpos($texte, "\n");
+            if (!$pos) {
+                $loop = FALSE;
+                $ligne = $texte;
+            } else {
             $ligne  = substr( $texte, $index, $pos);
             $texte = substr( $texte, $pos+1 );
         }
@@ -87,11 +92,12 @@ function addSociete( $nom, $adresse )
     $y1 = 18;
     //Positionnement en bas
     $this->SetXY( $x1, $y1 );
-    $this->SetFont('Arial','B',12);
+    $this->AddFont('DejaVu','','DejaVuSansCondensed.ttf',true);
+    $this->SetFont('DejaVu','',12);
     $length = $this->GetStringWidth( $nom );
     $this->Cell( $length, 2, $nom);
     $this->SetXY( $x1, $y1 + 4 );
-    $this->SetFont('Arial','',10);
+    $this->SetFont('DejaVu','',10);
     $length = $this->GetStringWidth( $adresse );
     //Coordonnées de la société
     $lignes = $this->sizeOfText( $adresse, $length) ;
@@ -113,7 +119,8 @@ function fact_dev( $libelle, $num )
     
     while ( $loop == 0 )
     {
-       $this->SetFont( "Helvetica", "B", $szfont );
+       $this->AddFont('DejaVu','','DejaVuSansCondensed.ttf',true);
+       $this->SetFont('DejaVu','',12);
        $sz = $this->GetStringWidth( $texte );
        if ( ($r1+$sz) > $r2 )
           $szfont --;
@@ -139,10 +146,11 @@ function addDate( $date )
     $this->RoundedRect($r1, $y1, ($r2 - $r1), $y2, 3.5, 'D');
     $this->Line( $r1, $mid, $r2, $mid);
     $this->SetXY( $r1 + ($r2-$r1)/2 - 5, $y1+3 );
-    $this->SetFont( "Helvetica", "B", 10);
+    $this->AddFont('DejaVu','','DejaVuSansCondensed.ttf',true);
+    $this->SetFont('DejaVu','',10);
     $this->Cell(10,5, "DATE", 0, 0, "C");
     $this->SetXY( $r1 + ($r2-$r1)/2 - 5, $y1+9 );
-    $this->SetFont( "Helvetica", "", 10);
+    $this->SetFont('DejaVu','',10);
     $this->Cell(10,5,$date, 0,0, "C");
 }
 
@@ -156,10 +164,11 @@ function addClient( $ref )
     $this->RoundedRect($r1, $y1, ($r2 - $r1), $y2, 3.5, 'D');
     $this->Line( $r1, $mid, $r2, $mid);
     $this->SetXY( $r1 + ($r2-$r1)/2 - 5, $y1+3 );
-    $this->SetFont( "Helvetica", "B", 10);
+    $this->AddFont('DejaVu','','DejaVuSansCondensed.ttf',true);
+    $this->SetFont('DejaVu','',10);
     $this->Cell(10,5, "ORDER", 0, 0, "C");
     $this->SetXY( $r1 + ($r2-$r1)/2 - 5, $y1 + 9 );
-    $this->SetFont( "Helvetica", "", 10);
+    $this->SetFont('DejaVu','',10);
     $this->Cell(10,5,$ref, 0,0, "C");
 }
 
@@ -171,11 +180,12 @@ function addClientShipAdresse( $adresse )
     $r2     = $r1 + 68;
     $y1     = 50;
      $this->SetXY( $r1, $y1);
-$this->SetFont('Arial','B',10);
-$length = $this->GetStringWidth("Shipping Address");
-    $this->Cell( $length, 2, "Shipping Address");
+     $this->AddFont('DejaVu','','DejaVuSansCondensed.ttf',true);
+$this->SetFont('DejaVu','',10);
+        $length = $this->GetStringWidth("Shipping Address");
+        $this->Cell($length, 2, "Shipping Address");
     $this->SetXY( $r1, $y1 + 4 );
-   $this->SetFont('Arial','',10);
+   $this->SetFont('DejaVu','',10);
     $this->MultiCell( 60, 4, $adresse);
 }
 function addClientBillAdresse( $adresse )
@@ -184,32 +194,35 @@ function addClientBillAdresse( $adresse )
     $r2     = $r1 + 68;
     $y1     = 50;
     $this->SetXY( $r1, $y1);
-$this->SetFont('Arial','B',10);
-$length = $this->GetStringWidth("Billing Address");
-    $this->Cell( $length, 2, "Billing Address");
+    $this->AddFont('DejaVu','','DejaVuSansCondensed.ttf',true);
+$this->SetFont('DejaVu','',10);
+        $length = $this->GetStringWidth("Billing Address");
+        $this->Cell($length, 2, "Billing Address");
     $this->SetXY( $r1, $y1 + 4 );
-   $this->SetFont('Arial','',10);
+   $this->SetFont('DejaVu','',10);
     $this->MultiCell( 60, 4, $adresse);
 }
 
 
 function addReference($ref)
 {
-    $this->SetFont( "Helvetica", "", 10);
-    $length = $this->GetStringWidth( "Customer's Comments: " . $ref );
+    $this->AddFont('DejaVu','','DejaVuSansCondensed.ttf',true);
+    $this->SetFont('DejaVu','',10);
+        $length = $this->GetStringWidth("Customer's Comments: " . $ref);
     $r1  = 15;
     $r2  = $r1 + $length;
     $y1  = 235;
     $y2  = $y1+5;
     $this->SetXY( $r1 , $y1 );
-    $this->MultiCell(180,4, "Customer's Comments: " . $ref);
+        $this->MultiCell(180, 4, "Customer's Comments: " . $ref);
 
      
 }
 
 function addNotes($ref)
 {
-    $this->SetFont( "Arial", "", 10);
+    $this->AddFont('DejaVu','','DejaVuSansCondensed.ttf',true);
+    $this->SetFont('DejaVu','',10);
     $length = $this->GetStringWidth( $ref );
     $r1  = 55;
     $r2  = $r1 + $length;
@@ -232,34 +245,31 @@ function addCols( $tab )
     $this->Line( $r1, $y1+6, $r1+$r2, $y1+6);
     $colX = $r1;
     $colonnes = $tab;
-    while ( list( $lib, $pos ) = each ($tab) )
-    {
-        $this->SetXY( $colX, $y1+2 );
-        $this->Cell( $pos, 1, $lib, 0, 0, "C");
-        $colX += $pos;
-        $this->Line( $colX, $y1, $colX, $y1+$y2);
+        while (list($lib, $pos) = each($tab)) {
+            $this->SetXY($colX, $y1 + 2);
+            $this->Cell($pos, 1, $lib, 0, 0, "C");
+            $colX += $pos;
+            $this->Line($colX, $y1, $colX, $y1 + $y2);
+        }
     }
-}
 
-function addLineFormat( $tab )
-{
-    global $format, $colonnes;
-    
-    while ( list( $lib, $pos ) = each ($colonnes) )
+    function addLineFormat($tab)
     {
-        if ( isset( $tab["$lib"] ) )
-            $format[ $lib ] = $tab["$lib"];
+        global $format, $colonnes;
+
+        while (list($lib, $pos) = each($colonnes)) {
+            if (isset($tab["$lib"]))
+                $format[$lib] = $tab["$lib"];
+        }
     }
-}
 
-function lineVert( $tab )
-{
-    global $colonnes;
-
-    reset( $colonnes );
-    $maxSize=0;
-    while ( list( $lib, $pos ) = each ($colonnes) )
+    function lineVert($tab)
     {
+        global $colonnes;
+
+        reset($colonnes);
+        $maxSize = 0;
+        while (list($lib, $pos) = each($colonnes)) {
         $texte = $tab[ $lib ];
         $longCell  = $pos -2;
         $size = $this->sizeOfText( $texte, $longCell );
@@ -278,8 +288,7 @@ function addLine( $ligne, $tab )
     $maxSize      = $ligne;
 
     reset( $colonnes );
-    while ( list( $lib, $pos ) = each ($colonnes) )
-    {
+        while (list($lib, $pos) = each($colonnes)) {
         $longCell  = $pos -2;
         $texte     = $tab[ $lib ];
         $length    = $this->GetStringWidth( $texte );

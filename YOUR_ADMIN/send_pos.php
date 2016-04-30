@@ -4,11 +4,11 @@
  * @copyright Copyright 2003-2016 Zen Cart Development Team
  * @copyright Portions Copyright 2003 osCommerce
  * @license http://www.zen-cart.com/license/2_0.txt GNU Public License V2.0
- * @version $Id: send_pos.php 2016-04-29 18:49:16Z webchills $
+ * @version $Id: send_pos.php 2016-04-30 20:49:16Z webchills $
  */
 require('includes/application_top.php');
 require(DIR_WS_CLASSES . 'currencies.php');
-define('FPDF_FONTPATH','includes/classes/fpdf/font/');
+define('FPDF_FONTPATH','fpdf/font/');
 require('pdfpack.php');
 
 //load email templates
