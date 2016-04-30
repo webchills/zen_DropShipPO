@@ -10,3 +10,4 @@ This module is now compatible with Zen Cart 1.5.4 and 1.5.5 but not fully tested
 Database Query Changes
 Moving various language and extra data files in single files
 Showing all available fields in edit_subcontrac.php
+Subcontractors now correctly saved in set_subcontrac.php
