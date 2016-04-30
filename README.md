@@ -1,14 +1,8 @@
-zen_DropShipPO
-==============
+Drop Shipping for Zen Cart
+==========================
 
-Drop Shipping Purchase Orders Module for Zen Cart v1.5.x
+Drop Shipping Purchase Orders Module for Zen Cart v1.5.4 and v1.5.5
 
-BIG HUGE CAVEAT!!
+Work in Progress
 =================
-(for those who did not read the official support thread for this module)
-
-This module is IN NO WAY compatible with Zen Cart v1.5.2 or greater. The reason WHY has everything to do with the diff between mysql and mysqli.. I haven't the FIRST CLUE how to fix it (or the time to put into it right now).. So if anyone wants to pick this up.. feel free.. 
-
-This updated version is for Zen Cart v1.5.0 - v1.5.1. DON'T ask me about v1.3.9 support (none is forthcoming, but YOU are free to adapt/test/try to see if it will work for v1.3.x stores)
-
-See: http://www.zen-cart.com/showthread.php?86503-Drop-Shipping-Purchase-Orders-Module-for-v1-3-8&p=1249382#post1249382
+This module is now compatible with Zen Cart 1.5.4 and 1.5.5 but not fully tested yet.

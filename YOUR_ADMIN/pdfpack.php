@@ -1,5 +1,5 @@
 <?php
-//require('fpdf/fpdf.php');
+require('fpdf/fpdf.php');
 
 // Xavier Nicolay 2004
 // Version 1.01 - Modified For Packing List
